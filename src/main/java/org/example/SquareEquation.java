@@ -1,41 +1,31 @@
 package org.example;
 
 public class SquareEquation {
-    private final double a;
-    private final double b;
-    private final double c;
+    private final double leadingCoefficient;
+    private final double linearCoefficient;
+    private final double constantTerm;
 
     public SquareEquation(double a, double b, double c) throws Exception {
         if (a == 0) {
             throw new Exception("The leading coefficient cannot be double 0");
         }
-        this.a = a;
-        this.b = b;
-        this.c = c;
+        this.leadingCoefficient = a;
+        this.linearCoefficient = b;
+        this.constantTerm = c;
     }
 
-    // i = sqrt(-1)
-    // sqrt(ab) = sqrt(a)sqrt(b)
-    // sqrt(D) = sqrt(-1 * -D) = sqrt(-1)*sqrt(-D) = isqrt(-D)
-    //x1 = (-b + sqrt(D))/2a = -b/2a + sqrt(D)/2a = -b/2a + isqrt(-D)/2a
-
     public Complex[] solve() {
-        double D = Math.pow(b, 2) - 4 * a * c;
+        double D = Math.pow(linearCoefficient, 2) - 4 * leadingCoefficient * constantTerm;
         if (D < 0) {
-            Complex x1 = new Complex(-b / (2 * a), Math.sqrt(-D) / (2 * a));
-            Complex x2 = new Complex(-b / (2 * a), -Math.sqrt(-D) / (2 * a));
-            System.out.println(String.format("x1 = %s", x1.toString()));
-            System.out.println(String.format("x2 = %s", x2.toString()));
+            Complex x1 = new Complex(-linearCoefficient / (2 * leadingCoefficient), Math.sqrt(-D) / (2 * leadingCoefficient));
+            Complex x2 = new Complex(-linearCoefficient / (2 * leadingCoefficient), -Math.sqrt(-D) / (2 * leadingCoefficient));
             return new Complex[]{x1, x2};
         } else if (D > 0) {
-            double x1 = -b / (2 * a) + Math.sqrt(D) / (2 * a);
-            double x2 = -b / (2 * a) - Math.sqrt(D) / (2 * a);
-            System.out.println(String.format("x1 = %s", x1));
-            System.out.println(String.format("x2 = %s", x2));
+            double x1 = -linearCoefficient / (2 * leadingCoefficient) + Math.sqrt(D) / (2 * leadingCoefficient);
+            double x2 = -linearCoefficient / (2 * leadingCoefficient) - Math.sqrt(D) / (2 * leadingCoefficient);
             return new Complex[]{new Complex(x1), new Complex(x2)};
         } else {
-            double x = -b / (2 * a);
-            System.out.println(String.format("x = %s", x));
+            double x = -linearCoefficient / (2 * leadingCoefficient);
             return new Complex[]{new Complex(x)};
         }
     }
